@@ -1,10 +1,8 @@
-import 'package:ecommerce/main.dart';
 import 'package:ecommerce/utils/widgets/diamond_divider.dart';
 import 'package:ecommerce/utils/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:myfashion_backend_client/myfashion_backend_client.dart';
 
 class BagScreen extends ConsumerStatefulWidget {
   const BagScreen({super.key});
@@ -41,19 +39,19 @@ class _MenuScreenState extends ConsumerState<BagScreen> {
                   minimumSize: WidgetStatePropertyAll(Size.fromHeight(45)),
                 ),
                 onPressed: () async {
-                  try {
-                    Recipe recipe = await client.recipe.generateRecipe('Nuts');
-                    // print(recipe);
-                    // final result = await client.example.greet('Himanshu');
-                    // final result2 = await client.example.abuse('Shruti');
-                    // final result3 = await client.example.love('Himanshu');
-                    // print(result);
-                    // print(result2);
-                    // print(result3);
-                  } catch (e, s) {
-                    // print(e);
-                    // print(s);
-                  }
+                  // try {
+                  //   Recipe recipe = await client.recipe.generateRecipe('Nuts');
+                  //   // print(recipe);
+                  //   // final result = await client.example.greet('Himanshu');
+                  //   // final result2 = await client.example.abuse('Shruti');
+                  //   // final result3 = await client.example.love('Himanshu');
+                  //   // print(result);
+                  //   // print(result2);
+                  //   // print(result3);
+                  // } catch (e, _) {
+                  //   // print(e);
+                  //   // print(s);
+                  // }
                 },
                 child: Text('Continue To Checkout'.toUpperCase()),
               ),

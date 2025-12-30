@@ -10,16 +10,16 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      VERSION: '3.1.1'
-      SERVERPOD_PASSWORD_database: '4J0f8kd_c8nBFuccs1fm8BiK0Aknb367'
-      SERVERPOD_PASSWORD_redis: 'td5oqGfDf3bxKI6wvtVSGvoMJeKPOkPB'
+      VERSION: "3.1.1"
+      SERVERPOD_PASSWORD_database: "4J0f8kd_c8nBFuccs1fm8BiK0Aknb367"
+      SERVERPOD_PASSWORD_redis: "td5oqGfDf3bxKI6wvtVSGvoMJeKPOkPB"
 
     steps:
       - uses: actions/checkout@v4
 
-      - uses: subosito/flutter-action@v2
+      - uses: dart-lang/setup-dart@v1
         with:
-          flutter-version: '3.32.8'
+          sdk: 3.10.3
 
       - name: Start containers
         working-directory: myfashion_backend_server
