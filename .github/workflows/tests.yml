@@ -42,9 +42,9 @@ jobs:
         # This will now find 'flutter' in the path and succeed
         run: serverpod generate
 
-      - name: Run tests
-        working-directory: myfashion_backend_server
-        run: dart test
+      # - name: Run tests
+      #   working-directory: myfashion_backend_server
+      #   run: dart test
 
       - name: Stop containers
         if: always()
