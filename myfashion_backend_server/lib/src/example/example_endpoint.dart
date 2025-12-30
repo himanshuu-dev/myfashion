@@ -8,7 +8,8 @@ class ExampleEndpoint extends Endpoint {
   Future<String> abuse(Session session, String name) async {
     return 'Fuck you, $name.';
   }
-   Future<String> love(Session session, String name) async {
+
+  Future<String> love(Session session, String name) async {
     return 'Love you, $name.';
   }
 }

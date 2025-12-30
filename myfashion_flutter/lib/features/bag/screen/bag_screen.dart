@@ -42,8 +42,8 @@ class _MenuScreenState extends ConsumerState<BagScreen> {
                 ),
                 onPressed: () async {
                   try {
-                     Recipe recipe = await client.recipe.generateRecipe('Nuts');
-                     print(recipe);
+                    Recipe recipe = await client.recipe.generateRecipe('Nuts');
+                    // print(recipe);
                     // final result = await client.example.greet('Himanshu');
                     // final result2 = await client.example.abuse('Shruti');
                     // final result3 = await client.example.love('Himanshu');
@@ -51,8 +51,8 @@ class _MenuScreenState extends ConsumerState<BagScreen> {
                     // print(result2);
                     // print(result3);
                   } catch (e, s) {
-                    print(e);
-                    print(s);
+                    // print(e);
+                    // print(s);
                   }
                 },
                 child: Text('Continue To Checkout'.toUpperCase()),

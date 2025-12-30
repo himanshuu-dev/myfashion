@@ -50,6 +50,7 @@ class DiamondDivider extends StatelessWidget {
     );
   }
 }
+
 class DiamondDividerDecoration extends Decoration {
   final Color color;
   final Color filledColor; // New: Color inside the diamond
@@ -98,12 +99,12 @@ class _DiamondPainter extends BoxPainter {
 
     final Rect rect = offset & configuration.size!;
     final double centerX = rect.center.dx;
-    
+
     // Calculate vertical position:
     // We want the indicator at the bottom of the tab.
     // rect.bottom is the very edge. We move up slightly so the stroke isn't cut off.
     final double halfDiagonal = (diamondSize * math.sqrt(2)) / 2;
-    final double centerY = rect.bottom - halfDiagonal - 1.0; 
+    final double centerY = rect.bottom - halfDiagonal - 1.0;
 
     // 1. Define the Diamond Path
     final Path diamondPath = Path();
@@ -138,7 +139,9 @@ class _DiamondPainter extends BoxPainter {
     // First, fill it with white (to look hollow/opaque)
     canvas.drawPath(
       diamondPath,
-      Paint()..color = filledColor..style = PaintingStyle.fill,
+      Paint()
+        ..color = filledColor
+        ..style = PaintingStyle.fill,
     );
 
     // Then, draw the colored border
