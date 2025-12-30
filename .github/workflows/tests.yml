@@ -17,9 +17,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: dart-lang/setup-dart@v1
+      # 🟢 CHANGED: Switch back to Flutter, but use 'stable'
+      # This provides both the 'flutter' command (needed for serverpod generate)
+      # and the 'dart' command (needed for tests).
+      - uses: subosito/flutter-action@v2
         with:
-          sdk: 3.10.3
+          channel: "stable"
+          cache: true
 
       - name: Start containers
         working-directory: myfashion_backend_server
@@ -35,6 +39,7 @@ jobs:
 
       - name: Run Serverpod generator
         working-directory: myfashion_backend_server
+        # This will now find 'flutter' in the path and succeed
         run: serverpod generate
 
       - name: Run tests
