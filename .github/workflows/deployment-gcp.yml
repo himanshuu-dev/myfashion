@@ -1,39 +1,73 @@
 name: Deploy to GCP
-
 on:
   push:
-    branches: [main]
+    branches:
+      - deployment-gcp-production
+      - deployment-gcp-staging
   workflow_dispatch:
+    inputs:
+      target:
+        description: "Target environment"
+        required: true
+        default: "production"
+        type: choice
+        options:
+          - staging
+          - production
 
 env:
+  # TODO: Update these values to match your GCP project
   PROJECT: hcdev-999
   REGION: asia-south2
   ZONE: asia-south2-a
+  
+  # Repository names (should match what you created in Artifact Registry)
+  REPOSITORY_PRODUCTION: "serverpod-production-container"
+  REPOSITORY_STAGING: "serverpod-staging-container"
 
 jobs:
-  build:
+  deploy:
+    name: Deploy to GCP
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Set up gcloud
-        uses: google-github-actions/setup-gcloud@v2
+      - name: Set target environment
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/deployment-gcp-staging" || "${{ inputs.target }}" == "staging" ]]; then
+            echo "TARGET=staging" >> $GITHUB_ENV
+            echo "REPOSITORY=${{ env.REPOSITORY_STAGING }}" >> $GITHUB_ENV
+          else
+            echo "TARGET=production" >> $GITHUB_ENV
+            echo "REPOSITORY=${{ env.REPOSITORY_PRODUCTION }}" >> $GITHUB_ENV
+          fi
+
+      - id: "auth"
+        name: "Authenticate to Google Cloud"
+        uses: "google-github-actions/auth@v2"
         with:
-          project_id: ${{ env.PROJECT }}
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          credentials_json: "${{ secrets.GOOGLE_CREDENTIALS }}"
 
       - name: Configure Docker
-        run: gcloud auth configure-docker --quiet
+        run: gcloud auth configure-docker "${{ env.REGION }}-docker.pkg.dev"
+
+      - name: Create passwords file
+        working-directory: myproject_server # TODO: Update to your server directory name
+        run: |
+          echo "${{ secrets.SERVERPOD_PASSWORDS }}" > config/passwords.yaml
 
       - name: Build Docker image
-        working-directory: myfashion_backend_server
-        run: |
-           docker build \
-             -t gcr.io/${PROJECT}/serverpod-server:latest \
-              .
-
+        working-directory: myproject_server # TODO: Update to your server directory name
+        run: docker build -t "${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT }}/${{ env.REPOSITORY }}/serverpod:latest" .
 
       - name: Push Docker image
-        run: |
-          docker push gcr.io/${PROJECT}/serverpod-server:latest
+        working-directory: myproject_server # TODO: Update to your server directory name
+        run: docker push "${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT }}/${{ env.REPOSITORY }}/serverpod:latest"
+
+      # Optional: Restart the instance group to pick up the new image immediately
+      # - name: Restart Instance Group
+      #   run: |
+      #     gcloud compute instance-groups managed rolling-action replace serverpod-${{ env.TARGET }}-group \
+      #       --project=${{ env.PROJECT }} \
+      #       --region=${{ env.REGION }}
