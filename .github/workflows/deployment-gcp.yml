@@ -53,16 +53,16 @@ jobs:
         run: gcloud auth configure-docker "${{ env.REGION }}-docker.pkg.dev"
 
       - name: Create passwords file
-        working-directory: myproject_server # TODO: Update to your server directory name
+        working-directory: myfashion_backend_server # TODO: Update to your server directory name
         run: |
           echo "${{ secrets.SERVERPOD_PASSWORDS }}" > config/passwords.yaml
 
       - name: Build Docker image
-        working-directory: myproject_server # TODO: Update to your server directory name
+        working-directory: myfashion_backend_server # TODO: Update to your server directory name
         run: docker build -t "${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT }}/${{ env.REPOSITORY }}/serverpod:latest" .
 
       - name: Push Docker image
-        working-directory: myproject_server # TODO: Update to your server directory name
+        working-directory: myfashion_backend_server # TODO: Update to your server directory name
         run: docker push "${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT }}/${{ env.REPOSITORY }}/serverpod:latest"
 
       # Optional: Restart the instance group to pick up the new image immediately
