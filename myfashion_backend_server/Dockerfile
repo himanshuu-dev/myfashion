@@ -1,5 +1,5 @@
 # Build stage
-FROM dart:3.8.0 AS build
+FROM dart:3.10.3 AS build
 WORKDIR /app
 COPY . .
 
@@ -36,4 +36,5 @@ EXPOSE 8081
 EXPOSE 8082
 
 # Define the entrypoint command
-ENTRYPOINT ./server --mode=$runmode --server-id=$serverid --logging=$logging --role=$role
+# ENTRYPOINT ./server --mode=$runmode --server-id=$serverid --logging=$logging --role=$role
+ENTRYPOINT ["./server", "--mode=production", "--bind-address=0.0.0.0"]
