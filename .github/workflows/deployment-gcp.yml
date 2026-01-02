@@ -7,8 +7,8 @@ on:
 
 env:
   PROJECT: hcdev-999
-  REGION: asia-sounth2
-  ZONE: asia-sounth2
+  REGION: asia-south2
+  ZONE: asia-south2
 
 jobs:
   build:
