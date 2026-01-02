@@ -1,20 +1,29 @@
-# flyctl launch added from .gitignore
-# Files and directories created by pub
-**\.dart_tool
-**\.packages
+# Dart / Flutter
+.dart_tool
+.packages
+build
+doc/api
 
-# Conventional directory for build outputs
-**\build
+# Web
+web/app
 
-# Ignore the flutter web app directory
-**\web\app
+# Config / secrets
+config/passwords.yaml
+config/firebase_service_account_key.json
+credentials.json
+*.json.key
+service-account*.json
 
-# Directory created by dartdoc
-**\doc\api
+# Git & tools
+.git
+.gitignore
+.vscode
+.idea
 
-# Passwords file
-**\config\passwords.yaml
+# Terraform
+.terraform
+*.tfstate
+*.tfstate.*
 
-# Firebase service account key for Firebase auth
-**\config\firebase_service_account_key.json
+# Fly
 fly.toml
