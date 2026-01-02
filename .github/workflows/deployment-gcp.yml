@@ -27,10 +27,12 @@ jobs:
         run: gcloud auth configure-docker --quiet
 
       - name: Build Docker image
-        run: |
-              docker build \
-              -t gcr.io/${PROJECT}/serverpod-server:latest \
         working-directory: myfashion_backend_server
+        run: |
+           docker build \
+             -t gcr.io/${PROJECT}/serverpod-server:latest \
+              .
+
 
       - name: Push Docker image
         run: |
